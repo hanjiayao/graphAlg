@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+// Author: Jiayao Han
+
 // Graph implementation using a 1-D array.
 // Due to symmetry of an undirected graph, this array essentially
 // stores the bottom-left half of the adjacency matrix.
