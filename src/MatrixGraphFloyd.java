@@ -174,7 +174,7 @@ public class MatrixGraphFloyd {
 	}
 
 	public static void main(String[] args) {
-		MatrixGraphFloyd graph = genRandomCompleteGraph(10);
+		MatrixGraphFloyd graph = genRandomCompleteGraph(11000);
 		long startTime = System.currentTimeMillis();
 		if (!MatrixGraphFloyd.testPerformance) {
 			System.out.println("The matrix graph is \n" + graph + "\n\n");
@@ -184,5 +184,15 @@ public class MatrixGraphFloyd {
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		System.out.println("The runtime is " + totalTime + " milliseconds");
+		
+		// Testing results
+		// # number of nodes (x1000), time (milliseconds)
+		// 1 836
+		// 3 18176
+		// 5 90028
+		// 7 241973
+		// 9 531748
+		// 11 1101362
+		// 15 Too long
 	}
 }

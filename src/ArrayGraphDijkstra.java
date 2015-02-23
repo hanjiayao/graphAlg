@@ -256,7 +256,7 @@ public class ArrayGraphDijkstra {
 	}
 
 	public static void main(String[] args) {
-		ArrayGraphDijkstra graph = genRandomCompleteGraph(10000);
+		ArrayGraphDijkstra graph = genRandomCompleteGraph(7000);
 		long startTime = System.currentTimeMillis();
 		if (!ArrayGraphDijkstra.testPerformance) {
 			System.out.println("The 1-D array graph is \n" + graph + "\n\n");
@@ -266,5 +266,13 @@ public class ArrayGraphDijkstra {
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		System.out.println("The runtime is " + totalTime + " milliseconds");
+		
+		// Testing results
+		// # number of nodes (x1000), time (milliseconds)
+		// 1 1012
+		// 3 45234
+		// 5 192870
+		// 7
+		// 9 Too long
 	}
 }

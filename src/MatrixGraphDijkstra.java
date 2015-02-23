@@ -202,7 +202,7 @@ public class MatrixGraphDijkstra {
 	}
 	
 	public static void main(String[] args) {
-		MatrixGraphDijkstra graph = genRandomCompleteGraph(10);
+		MatrixGraphDijkstra graph = genRandomCompleteGraph(50000);
 		long startTime = System.currentTimeMillis();
 		if (!MatrixGraphDijkstra.testPerformance) {
 			System.out.println("The matrix graph is \n" + graph + "\n\n");
@@ -212,5 +212,17 @@ public class MatrixGraphDijkstra {
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		System.out.println("The runtime is " + totalTime + " milliseconds");
+		
+		// Testing results
+		// # number of nodes (x1000), time (milliseconds)
+		// 1 129
+		// 3 474
+		// 5 1110
+		// 7 2065
+		// 9 3284
+		// 15 10185
+		// 20 19297
+		// 30 45429
+		// 50 Too long
 	}
 }

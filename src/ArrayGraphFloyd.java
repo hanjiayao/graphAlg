@@ -201,5 +201,16 @@ public class ArrayGraphFloyd {
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		System.out.println("The runtime is " + totalTime + " milliseconds");
+		
+		// Testing results
+		// # number of nodes (x1000), time (milliseconds)
+		// 1
+		// 3 
+		// 5 
+		// 7 
+		// 9 
+		// 15 
+		// 20 
+		// 30 Too long
 	}
 }
