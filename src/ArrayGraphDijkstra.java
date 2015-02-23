@@ -10,6 +10,10 @@ import java.util.Random;
 // stores the bottom-left half of the adjacency matrix.
 // It also uses Dijkstra to find all pair shortest paths.
 public class ArrayGraphDijkstra {
+	// Controlling whether we want to do printing to console, depending on
+	// if we are testing the performance or not.
+	private static boolean testPerformance = true;
+	
 	// The 1-D array for storing the nodes.
 	private Edge[] graphArray;
 	// The number of the nodes, named as 0, 1, ... size - 1.
@@ -246,12 +250,21 @@ public class ArrayGraphDijkstra {
 		}
 
 		sb.append(path);
-		System.out.println(sb);
+		if (!ArrayGraphDijkstra.testPerformance) {
+			System.out.println(sb);
+		}
 	}
 
 	public static void main(String[] args) {
-		ArrayGraphDijkstra graph = genRandomCompleteGraph(10);
-		System.out.println("The 1-D array graph is \n" + graph + "\n\n");
+		ArrayGraphDijkstra graph = genRandomCompleteGraph(10000);
+		long startTime = System.currentTimeMillis();
+		if (!ArrayGraphDijkstra.testPerformance) {
+			System.out.println("The 1-D array graph is \n" + graph + "\n\n");
+		}
 		printDijkstraPaths(graph, 0);
+		
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("The runtime is " + totalTime + " milliseconds");
 	}
 }

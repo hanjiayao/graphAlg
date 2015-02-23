@@ -8,6 +8,10 @@ import java.util.Random;
 // An undirected graph using matrix implementation, with a dijkstra to
 // find shortest paths.
 public class MatrixGraphDijkstra {
+	// Controlling whether we want to do printing to console, depending on
+	// if we are testing the performance or not.
+	private static boolean testPerformance = true;
+	
 	// Adjacency matrix for the graph
 	private long[][] matrix;
 	// Number of nodes in the graph.
@@ -192,12 +196,21 @@ public class MatrixGraphDijkstra {
 		}
 		
 		sb.append(path);
-		System.out.println(sb);
+		if (!MatrixGraphDijkstra.testPerformance) {
+			System.out.println(sb);
+		}
 	}
 	
 	public static void main(String[] args) {
 		MatrixGraphDijkstra graph = genRandomCompleteGraph(10);
-		System.out.println("The matrix graph is \n" + graph + "\n\n");
+		long startTime = System.currentTimeMillis();
+		if (!MatrixGraphDijkstra.testPerformance) {
+			System.out.println("The matrix graph is \n" + graph + "\n\n");
+		}
 		printDijkstraPaths(graph, 0);
+		
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("The runtime is " + totalTime + " milliseconds");
 	}
 }

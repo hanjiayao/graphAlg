@@ -7,6 +7,10 @@ import java.util.Random;
 // stores the bottom-left half of the adjacency matrix.
 // It also uses Floyd to find all pair shortest paths.
 public class ArrayGraphFloyd {
+	// Controlling whether we want to do printing to console, depending on
+	// if we are testing the performance or not.
+	private static boolean testPerformance = true;
+	
 	// The 1-D array for storing the nodes.
 	private Edge[] graphArray;
 	// The number of the nodes, named as 0, 1, ... size - 1.
@@ -160,8 +164,10 @@ public class ArrayGraphFloyd {
 		for (int i = 0; i < graph.getSize(); i++) {
 			for (int j = 0; j < graph.getSize(); j++) {
 				if (i != j) {
-					System.out.println("From " + i + " to " + j + ": "
-							+ getPath(i, j, next));
+					if (!ArrayGraphFloyd.testPerformance) {
+						System.out.println("From " + i + " to " + j + ": "
+								+ getPath(i, j, next));
+					}
 				}
 			}
 		}
@@ -183,8 +189,15 @@ public class ArrayGraphFloyd {
 	}
 
 	public static void main(String[] args) {
-		ArrayGraphFloyd graph = genRandomGraph(10);
-		System.out.println("The 1-D array graph is \n" + graph + "\n\n");
+		ArrayGraphFloyd graph = genRandomGraph(10000);
+		long startTime = System.currentTimeMillis();
+		if (!ArrayGraphFloyd.testPerformance) {
+			System.out.println("The 1-D array graph is \n" + graph + "\n\n");
+		}
 		printFloydPaths(graph);
+		
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("The runtime is " + totalTime + " milliseconds");
 	}
 }

@@ -8,6 +8,10 @@ import java.util.TreeSet;
 // Graph implementation using the adjacency list approach, with Floyd method
 // to find all pair shortest paths.
 public class AdjListGraphFloyd {
+	// Controlling whether we want to do printing to console, depending on
+	// if we are testing the performance or not.
+	private static boolean testPerformance = true;
+
 	// Maps from each node to a list of its adjacent nodes/edges.
 	private Map<Integer, List<Edge>> adjLists;
 	// Number of nodes in the graph, named from 0, 1, ..., size -1.
@@ -16,7 +20,7 @@ public class AdjListGraphFloyd {
 	public AdjListGraphFloyd(int size) {
 		this.size = size;
 		adjLists = new HashMap<Integer, List<Edge>>();
-		
+
 		// Loop through each node to init its adjacency list.
 		for (int i = 0; i < size; i++) {
 			adjLists.put(i, new ArrayList<Edge>());
@@ -34,7 +38,7 @@ public class AdjListGraphFloyd {
 					+ (size - 1));
 			return;
 		}
-		
+
 		adjLists.get(i).add(new Edge(i, j, weight));
 		// Need to keep symmetry.
 		adjLists.get(j).add(new Edge(j, i, weight));
@@ -53,16 +57,16 @@ public class AdjListGraphFloyd {
 	public String toString() {
 		// Use tree set so that we can get the nodes in order.
 		TreeSet<Integer> nodes = new TreeSet<Integer>(adjLists.keySet());
-		
+
 		// Use StringBuilder for efficient string manipulation/mutation.
 		StringBuilder sb = new StringBuilder();
 		for (Integer node : nodes) {
 			sb.append(node + ": " + adjLists.get(node) + "\n");
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	// Generate a complete graph with random weights.
 	public static AdjListGraphFloyd genRandomGraph(int size) {
 		AdjListGraphFloyd graph = new AdjListGraphFloyd(size);
@@ -133,8 +137,10 @@ public class AdjListGraphFloyd {
 		for (int i = 0; i < graph.getSize(); i++) {
 			for (int j = 0; j < graph.getSize(); j++) {
 				if (i != j) {
-					System.out.println("From " + i + " to " + j + ": "
-							+ getPath(i, j, next));
+					if (!AdjListGraphFloyd.testPerformance) {
+						System.out.println("From " + i + " to " + j + ": "
+								+ getPath(i, j, next));
+					}
 				}
 			}
 		}
@@ -156,8 +162,26 @@ public class AdjListGraphFloyd {
 	}
 
 	public static void main(String[] args) {
-		AdjListGraphFloyd graph = genRandomGraph(10);
-		System.out.println("The adjacency list graph is \n" + graph + "\n\n");
+		AdjListGraphFloyd graph = genRandomGraph(11000);
+
+		long startTime = System.currentTimeMillis();
+		if (!AdjListGraphFloyd.testPerformance) {
+			System.out.println("The adjacency list graph is \n" + graph
+					+ "\n\n");
+		}
 		printFloydPaths(graph);
+
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("The runtime is " + totalTime + " milliseconds");
+
+		// Testing results
+		// # number of nodes (x1000), time (milliseconds)
+		// 1 775
+		// 3 17825
+		// 5 91259
+		// 7 266299
+		// 9 525288
+		// 11
 	}
 }
