@@ -270,9 +270,9 @@ public class ArrayGraphDijkstra {
 		// Testing results
 		// # number of nodes (x1000), time (milliseconds)
 		// 1 1012
-		// 3 45234
-		// 5 192870
-		// 7
-		// 9 Too long
+		// 3 37837
+		// 5 182399
+		// 7 1009900
+		// 8 Too long
 	}
 }

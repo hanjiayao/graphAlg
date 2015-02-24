@@ -191,7 +191,7 @@ public class ArrayGraphFloyd {
 	}
 
 	public static void main(String[] args) {
-		ArrayGraphFloyd graph = genRandomGraph(10000);
+		ArrayGraphFloyd graph = genRandomGraph(11000);
 		long startTime = System.currentTimeMillis();
 		if (!ArrayGraphFloyd.testPerformance) {
 			System.out.println("The 1-D array graph is \n" + graph + "\n\n");
@@ -204,13 +204,11 @@ public class ArrayGraphFloyd {
 		
 		// Testing results
 		// # number of nodes (x1000), time (milliseconds)
-		// 1
-		// 3 
-		// 5 
-		// 7 
-		// 9 
-		// 15 
-		// 20 
-		// 30 Too long
+		// 1 793
+		// 3 19384
+		// 5 98999
+		// 7 244671
+		// 9 509277
+		// 11 927476
 	}
 }
