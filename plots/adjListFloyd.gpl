@@ -1,0 +1,10 @@
+set terminal png transparent nocrop enhanced font arial 8 size 420,320 
+set output 'adjListFloyd.png'
+
+set boxwidth 0.5
+set style fill solid
+
+set xlabel "Number of nodes (x 1000)"
+set ylabel "Runtime (milliseconds)"
+
+plot "adjListFloyd.dat" using 1:2 with boxes title "Adjacency List Graph with Floyd"
