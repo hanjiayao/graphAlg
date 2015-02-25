@@ -11,7 +11,7 @@ import java.util.Random;
 public class ArrayGraphFloyd {
 	// Controlling whether we want to do printing to console, depending on
 	// if we are testing the performance or not.
-	private static boolean testPerformance = true;
+	private static boolean testPerformance = false;
 	
 	// The 1-D array for storing the nodes.
 	private Edge[] graphArray;
@@ -191,12 +191,23 @@ public class ArrayGraphFloyd {
 	}
 
 	public static void main(String[] args) {
-		ArrayGraphFloyd graph = genRandomGraph(11000);
 		long startTime = System.currentTimeMillis();
+		
+		long totalMem = Runtime.getRuntime().totalMemory();
+		long freeMem = Runtime.getRuntime().freeMemory();
+		// The memory already allocated without running our algorithm or generating data structure.
+		long baseMem = totalMem - freeMem;
+		
+		ArrayGraphFloyd graph = genRandomGraph(11000);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure: " + (totalMem - freeMem - baseMem) / 1000000);
+		
 		if (!ArrayGraphFloyd.testPerformance) {
 			System.out.println("The 1-D array graph is \n" + graph + "\n\n");
 		}
 		printFloydPaths(graph);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure and algorithm: " + (totalMem - freeMem - baseMem) / 1000000);
 		
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
@@ -210,5 +221,14 @@ public class ArrayGraphFloyd {
 		// 7 244671
 		// 9 509277
 		// 11 927476
+		
+		// Storage testing results
+		// # number of nodes (x1000), usage for DS, usage for DS + algorithm
+		// 1 19 58
+		// 3 178 695
+		// 5 498 1809
+		// 7 978 3736
+		// 9 1618 5970
+		// 11 2424 6857
 	}
 }

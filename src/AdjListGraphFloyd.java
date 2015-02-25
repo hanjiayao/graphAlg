@@ -10,7 +10,7 @@ import java.util.TreeSet;
 public class AdjListGraphFloyd {
 	// Controlling whether we want to do printing to console, depending on
 	// if we are testing the performance or not.
-	private static boolean testPerformance = true;
+	private static boolean testPerformance = false;
 
 	// Maps from each node to a list of its adjacent nodes/edges.
 	private Map<Integer, List<Edge>> adjLists;
@@ -162,14 +162,24 @@ public class AdjListGraphFloyd {
 	}
 
 	public static void main(String[] args) {
-		AdjListGraphFloyd graph = genRandomGraph(11000);
-
 		long startTime = System.currentTimeMillis();
+		
+		long totalMem = Runtime.getRuntime().totalMemory();
+		long freeMem = Runtime.getRuntime().freeMemory();
+		// The memory already allocated without running our algorithm or generating data structure.
+		long baseMem = totalMem - freeMem;
+		
+		AdjListGraphFloyd graph = genRandomGraph(11000);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure: " + (totalMem - freeMem - baseMem) / 1000000);
+		
 		if (!AdjListGraphFloyd.testPerformance) {
 			System.out.println("The adjacency list graph is \n" + graph
 					+ "\n\n");
 		}
 		printFloydPaths(graph);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure and algorithm: " + (totalMem - freeMem - baseMem) / 1000000);
 
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
@@ -184,5 +194,14 @@ public class AdjListGraphFloyd {
 		// 9 525288
 		// 11 1017860
 		// 15 Too long
+		
+		// Storage testing results
+		// # number of nodes (x1000), usage for DS, usage for DS + algorithm
+		// 1 47 76
+		// 3 450 701
+		// 5 1177 2175
+		// 7 2391 4461
+		// 9 4302 7267
+		// 11 5773 6961
 	}
 }

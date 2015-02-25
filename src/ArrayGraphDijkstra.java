@@ -12,7 +12,7 @@ import java.util.Random;
 public class ArrayGraphDijkstra {
 	// Controlling whether we want to do printing to console, depending on
 	// if we are testing the performance or not.
-	private static boolean testPerformance = true;
+	private static boolean testPerformance = false;
 	
 	// The 1-D array for storing the nodes.
 	private Edge[] graphArray;
@@ -256,12 +256,23 @@ public class ArrayGraphDijkstra {
 	}
 
 	public static void main(String[] args) {
-		ArrayGraphDijkstra graph = genRandomCompleteGraph(7000);
 		long startTime = System.currentTimeMillis();
+		
+		long totalMem = Runtime.getRuntime().totalMemory();
+		long freeMem = Runtime.getRuntime().freeMemory();
+		// The memory already allocated without running our algorithm or generating data structure.
+		long baseMem = totalMem - freeMem;
+		
+		ArrayGraphDijkstra graph = genRandomCompleteGraph(9000);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure: " + (totalMem - freeMem - baseMem) / 1000000);
+		
 		if (!ArrayGraphDijkstra.testPerformance) {
 			System.out.println("The 1-D array graph is \n" + graph + "\n\n");
 		}
 		printDijkstraPaths(graph, 0);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure and algorithm: " + (totalMem - freeMem - baseMem) / 1000000);
 		
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
@@ -272,7 +283,15 @@ public class ArrayGraphDijkstra {
 		// 1 1012
 		// 3 37837
 		// 5 182399
-		// 7 1009900
-		// 8 Too long
+		// 7 536619
+		// 9 1105480
+		
+		// Storage testing results
+		// # number of nodes (x1000), usage for DS, usage for DS + algorithm
+		// 1 19 36
+		// 3 178 185
+		// 5 498 505
+		// 7 978 992
+		// 9 1618 1622
 	}
 }

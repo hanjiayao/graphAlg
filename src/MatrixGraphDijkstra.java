@@ -10,7 +10,7 @@ import java.util.Random;
 public class MatrixGraphDijkstra {
 	// Controlling whether we want to do printing to console, depending on
 	// if we are testing the performance or not.
-	private static boolean testPerformance = true;
+	private static boolean testPerformance = false;
 	
 	// Adjacency matrix for the graph
 	private long[][] matrix;
@@ -202,18 +202,29 @@ public class MatrixGraphDijkstra {
 	}
 	
 	public static void main(String[] args) {
-		MatrixGraphDijkstra graph = genRandomCompleteGraph(50000);
 		long startTime = System.currentTimeMillis();
+		
+		long totalMem = Runtime.getRuntime().totalMemory();
+		long freeMem = Runtime.getRuntime().freeMemory();
+		// The memory already allocated without running our algorithm or generating data structure.
+		long baseMem = totalMem - freeMem;
+		
+		MatrixGraphDijkstra graph = genRandomCompleteGraph(30000);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure: " + (totalMem - freeMem - baseMem) / 1000000);
+		
 		if (!MatrixGraphDijkstra.testPerformance) {
 			System.out.println("The matrix graph is \n" + graph + "\n\n");
 		}
 		printDijkstraPaths(graph, 0);
+		freeMem = Runtime.getRuntime().freeMemory();
+		System.out.println("Usage (MB) by data structure and algorithm: " + (totalMem - freeMem - baseMem) / 1000000);
 		
 		long endTime = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
 		System.out.println("The runtime is " + totalTime + " milliseconds");
 		
-		// Testing results
+		// Runtime Testing results
 		// # number of nodes (x1000), time (milliseconds)
 		// 1 129
 		// 3 474
@@ -224,5 +235,16 @@ public class MatrixGraphDijkstra {
 		// 20 19297
 		// 30 45429
 		// 50 Too long
+		
+		// Storage testing results
+		// # number of nodes (x1000), usage for DS, usage for DS + algorithm
+		// 1 7 10
+		// 3 70 81
+		// 5 198 212
+		// 7 391 400
+		// 9 647 655
+		// 15 1799 1820
+		// 20 3199 3213
+		// 30 7199 7215
 	}
 }
